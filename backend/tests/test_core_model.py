@@ -1,6 +1,12 @@
 from django.test import TestCase
 
-from .factories import DatasetFactory, OsmUserFactory, AoiFactory, LabelFactory
+from .factories import (
+    DatasetFactory,
+    OsmUserFactory,
+    AoiFactory,
+    LabelFactory,
+    ModelFactory,
+)
 
 
 class TestCoreModels(TestCase):
@@ -10,6 +16,7 @@ class TestCoreModels(TestCase):
         self.dataset = DatasetFactory(created_by=self.user)
         self.aoi = AoiFactory(dataset=self.dataset)
         self.label = LabelFactory(aoi=self.aoi)
+        self.model = ModelFactory(dataset=self.dataset, created_by=self.user)
 
     def test_dataset_creation(self):
         self.assertEqual(self.dataset.name, "Test Dataset")
@@ -21,3 +28,9 @@ class TestCoreModels(TestCase):
 
     def test_label_creation(self):
         self.assertEqual(self.label.aoi, self.aoi)
+
+    def test_model_creation(self):
+        self.assertEqual(self.model.name, "Test Model")
+        self.assertEqual(self.model.dataset, self.dataset)
+        self.assertEqual(self.model.created_by, self.user)
+        self.assertEqual(self.model.status, -1)
