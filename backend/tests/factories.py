@@ -1,7 +1,7 @@
 import factory
 
 from login.models import OsmUser
-from core.models import Dataset, AOI, Label, Model, Training, Feedback
+from core.models import Dataset, AOI, Label, Model, Training, Feedback, FeedbackAOI
 
 
 class OsmUserFactory(factory.django.DjangoModelFactory):
@@ -74,3 +74,15 @@ class FeedbackFactory(factory.django.DjangoModelFactory):
     feedback_type = "TP"
     user = factory.SubFactory(OsmUserFactory)
     source_imagery = "https://test_data/hotosm/fAIr/"
+
+
+class FeedbackAoiFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = FeedbackAOI
+
+    training = factory.SubFactory(TrainingFactory)
+    geom = "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))"
+    label_status = -1
+    source_imagery = "https://test_data/hotosm/"
+    user = factory.SubFactory(OsmUserFactory)
