@@ -1,7 +1,7 @@
 import factory
 
 from login.models import OsmUser
-from core.models import Dataset, AOI, Label, Model
+from core.models import Dataset, AOI, Label, Model, Training
 
 
 class OsmUserFactory(factory.django.DjangoModelFactory):
@@ -48,3 +48,16 @@ class ModelFactory(factory.django.DjangoModelFactory):
     name = "Test Model"
     created_by = factory.SubFactory(OsmUserFactory)
     status = -1
+
+
+class TrainingFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Training
+
+    model = factory.SubFactory(ModelFactory)
+    status = "SUBMITTED"
+    zoom_level = [20, 21]
+    created_by = factory.SubFactory(OsmUserFactory)
+    epochs = 3
+    batch_size = 24
