@@ -7,6 +7,7 @@ from .factories import (
     LabelFactory,
     ModelFactory,
     TrainingFactory,
+    FeedbackFactory,
 )
 
 
@@ -19,6 +20,7 @@ class TestCoreModels(TestCase):
         self.label = LabelFactory(aoi=self.aoi)
         self.model = ModelFactory(dataset=self.dataset, created_by=self.user)
         self.training = TrainingFactory(model=self.model, created_by=self.user)
+        self.feedback = FeedbackFactory(training=self.training, user=self.user)
 
     def test_dataset_creation(self):
         self.assertEqual(self.dataset.name, "Test Dataset")
@@ -44,3 +46,10 @@ class TestCoreModels(TestCase):
         self.assertEqual(self.training.created_by, self.user)
         self.assertEqual(self.training.epochs, 3)
         self.assertEqual(self.training.batch_size, 24)
+
+    def test_feedback_creation(self):
+        self.assertEqual(self.feedback.training, self.training)
+        self.assertEqual(self.feedback.zoom_level, 19)
+        self.assertEqual(self.feedback.feedback_type, "TP")
+        self.assertEqual(self.feedback.user, self.user)
+        self.assertEqual(self.feedback.source_imagery, "https://test_data/hotosm/fAIr/")
