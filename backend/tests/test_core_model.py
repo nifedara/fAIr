@@ -6,6 +6,7 @@ from .factories import (
     AoiFactory,
     LabelFactory,
     ModelFactory,
+    TrainingFactory,
 )
 
 
@@ -17,6 +18,7 @@ class TestCoreModels(TestCase):
         self.aoi = AoiFactory(dataset=self.dataset)
         self.label = LabelFactory(aoi=self.aoi)
         self.model = ModelFactory(dataset=self.dataset, created_by=self.user)
+        self.training = TrainingFactory(model=self.model, created_by=self.user)
 
     def test_dataset_creation(self):
         self.assertEqual(self.dataset.name, "Test Dataset")
@@ -34,3 +36,11 @@ class TestCoreModels(TestCase):
         self.assertEqual(self.model.dataset, self.dataset)
         self.assertEqual(self.model.created_by, self.user)
         self.assertEqual(self.model.status, -1)
+
+    def test_training_creation(self):
+        self.assertEqual(self.training.model, self.model)
+        self.assertEqual(self.training.status, "SUBMITTED")
+        self.assertEqual(self.training.zoom_level, [20, 21])
+        self.assertEqual(self.training.created_by, self.user)
+        self.assertEqual(self.training.epochs, 3)
+        self.assertEqual(self.training.batch_size, 24)
