@@ -1,9 +1,7 @@
 import factory
 
 from login.models import OsmUser
-from core.models import Dataset, AOI
-
-from django.contrib.gis.geos import GEOSGeometry
+from core.models import Dataset, AOI, Label
 
 
 class OsmUserFactory(factory.django.DjangoModelFactory):
@@ -27,6 +25,15 @@ class AoiFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = AOI
 
-    geom = GEOSGeometry("POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))", srid=4326)
+    geom = "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))"
     dataset = factory.SubFactory(DatasetFactory)
     label_status = -1
+
+
+class LabelFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Label
+
+    aoi = factory.SubFactory(AoiFactory)
+    geom = "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))"
