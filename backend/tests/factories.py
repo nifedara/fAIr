@@ -1,7 +1,7 @@
 import factory
 
 from login.models import OsmUser
-from core.models import Dataset, AOI, Label
+from core.models import Dataset, AOI, Label, Model
 
 
 class OsmUserFactory(factory.django.DjangoModelFactory):
@@ -37,3 +37,14 @@ class LabelFactory(factory.django.DjangoModelFactory):
 
     aoi = factory.SubFactory(AoiFactory)
     geom = "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))"
+
+
+class ModelFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Model
+
+    dataset = factory.SubFactory(DatasetFactory)
+    name = "Test Model"
+    created_by = factory.SubFactory(OsmUserFactory)
+    status = -1
