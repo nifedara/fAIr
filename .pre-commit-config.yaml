@@ -1,0 +1,44 @@
+repos:
+
+  # Versioning: Commit messages & changelog
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.27.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+
+  # Lint / autoformat: Python code
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.4.8"
+    hooks:
+      - id: ruff
+
+  # Spelling: Checks for common misspellings in text files.
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        types: [text]
+        args: [--toml, pyproject.toml]
+
+  # Autoformat: YAML, JSON, Markdown, etc.
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        entry: env PRETTIER_LEGACY_CLI=1 prettier
+        args:
+          [
+            --ignore-unknown,
+            --no-error-on-unmatched-pattern,
+            "!chart/**",
+            "!CHANGELOG.md",
+            "!CONTRIBUTING.md"
+          ]
+
+  # Trailing whitespace
+  -   repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v2.3.0
+      hooks:
+      -   id: check-yaml
+      -   id: trailing-whitespace
