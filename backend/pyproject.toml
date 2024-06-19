@@ -45,4 +45,5 @@ distribution = true
 [tool.pdm.dev-dependencies]
 dev = [
     "commitizen>=3.27.0",
+    "ruff>=0.4.9",
 ]
