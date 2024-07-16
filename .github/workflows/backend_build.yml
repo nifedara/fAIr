@@ -121,6 +121,7 @@ jobs:
         run: |
           cd backend/
 
+          pip install coverage
 
           export TESTING_TOKEN=$TESTING_TOKEN
           coverage run manage.py test tests
