@@ -121,8 +121,15 @@ jobs:
         run: |
           cd backend/
 
-          pip install coverage
 
           export TESTING_TOKEN=$TESTING_TOKEN
+          python manage.py makemigrations
+          python manage.py makemigrations core
+          python manage.py makemigrations login
+          python manage.py migrate
+          python manage.py migrate login
+          python manage.py migrate core
+
+          pip install coverage
           coverage run manage.py test tests
           coverage report
