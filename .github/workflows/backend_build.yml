@@ -117,7 +117,7 @@ jobs:
 
       - name: Run tests
         env:
-          TESTING_TOKEN: ${{ secrets.TESTING_TOKEN }}
+          TESTING_TOKEN: ${{ os.environ['TESTING_TOKEN'] }}
         run: |
           cd backend/
 
